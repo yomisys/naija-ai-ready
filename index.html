@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Make Nigeria AI-Ready — Completion Survey</title>
+<style>
+:root {
+  --ng: #008751; --ng-dark: #005a36; --ng-light: #00C853; --ng-pale: #e8f5e9;
+  --navy: #0a1628; --gold: #FFB300; --gold-bg: #FFF8E1;
+  --off: #f5f5f0; --white: #fff; --border: #e0e0e0;
+  --t: #1a1a1a; --tm: #444; --ts: #777;
+  --danger: #e53e3e;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--off); color: var(--t); font-size: 15px; line-height: 1.6; }
+
+/* HEADER */
+.header {
+  background: linear-gradient(135deg, #003d1a 0%, var(--navy) 60%, #1a0a2e 100%);
+  padding: 36px 20px 32px; text-align: center; position: relative; overflow: hidden;
+}
+.header::before {
+  content:''; position:absolute; top:-60px; right:-60px;
+  width:260px; height:260px; border-radius:50%;
+  background:radial-gradient(circle,rgba(0,200,83,0.12) 0%,transparent 70%);
+}
+.flag-row { display:flex; justify-content:center; gap:3px; margin-bottom:20px; }
+.flag-row span { display:block; width:10px; height:24px; border-radius:2px; }
+.header-badge {
+  display:inline-block; background:rgba(255,255,255,0.1);
+  border:1px solid rgba(255,255,255,0.2); border-radius:20px;
+  padding:4px 14px; font-size:11px; color:rgba(255,255,255,0.7);
+  letter-spacing:1px; text-transform:uppercase; margin-bottom:14px;
+}
+.header h1 { font-size:28px; font-weight:800; color:white; line-height:1.2; margin-bottom:6px; }
+.header h1 span { color:var(--ng-light); }
+.header p { font-size:13px; color:rgba(255,255,255,0.6); max-width:400px; margin:0 auto; }
+
+/* PROGRESS BAR */
+.prog-wrap { background:white; padding:14px 20px; border-bottom:1px solid var(--border); }
+.prog-labels { display:flex; justify-content:space-between; font-size:11px; color:var(--ts); margin-bottom:6px; }
+.prog-track { height:5px; background:#e0e0e0; border-radius:3px; overflow:hidden; }
+.prog-fill { height:100%; background:linear-gradient(90deg,var(--ng),var(--ng-light)); border-radius:3px; width:0%; transition:width 0.4s; }
+
+/* FORM WRAPPER */
+.wrap { max-width:600px; margin:0 auto; padding:24px 16px 60px; }
+
+/* SECTION */
+.section { margin-bottom:10px; }
+.section-title {
+  font-size:11px; font-weight:700; color:var(--ng); text-transform:uppercase;
+  letter-spacing:1px; margin-bottom:12px; display:flex; align-items:center; gap:8px;
+}
+.section-title::after { content:''; flex:1; height:1px; background:var(--ng-pale); }
+
+/* CARD */
+.card {
+  background:white; border:1px solid var(--border); border-radius:12px;
+  padding:20px; margin-bottom:14px;
+}
+
+/* FIELD */
+.field { margin-bottom:16px; }
+.field:last-child { margin-bottom:0; }
+.field label {
+  display:block; font-size:13px; font-weight:600; color:var(--tm); margin-bottom:6px;
+}
+.field label .req { color:var(--danger); margin-left:2px; }
+.field label .hint { font-weight:400; color:var(--ts); font-size:11px; margin-left:4px; }
+input[type="text"], input[type="tel"], input[type="email"], select, textarea {
+  width:100%; padding:10px 13px; border:1.5px solid var(--border); border-radius:8px;
+  font-size:14px; font-family:inherit; color:var(--t); background:white;
+  transition:border-color 0.15s, box-shadow 0.15s; -webkit-appearance:none;
+}
+input:focus, select:focus, textarea:focus {
+  outline:none; border-color:var(--ng); box-shadow:0 0 0 3px rgba(0,135,81,0.1);
+}
+select {
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23777' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 13px center; padding-right:34px;
+}
+textarea { min-height:80px; resize:vertical; }
+
+/* RADIO / CHECK OPTIONS */
+.options { display:flex; flex-direction:column; gap:7px; }
+.option {
+  display:flex; align-items:flex-start; gap:10px; padding:10px 13px;
+  border:1.5px solid var(--border); border-radius:8px; cursor:pointer;
+  transition:all 0.12s; font-size:13px; color:var(--tm);
+}
+.option:hover { border-color:var(--ng); background:var(--ng-pale); }
+.option.selected { border-color:var(--ng); background:var(--ng-pale); color:var(--ng-dark); font-weight:500; }
+.option input { margin-top:1px; accent-color:var(--ng); width:15px; height:15px; flex-shrink:0; }
+.option-label { flex:1; }
+.option-sub { font-size:11px; color:var(--ts); display:block; font-weight:400; }
+
+/* STAR RATING */
+.stars { display:flex; gap:6px; }
+.star {
+  font-size:28px; cursor:pointer; color:#ddd; transition:color 0.1s, transform 0.1s;
+  line-height:1; user-select:none;
+}
+.star.lit { color:var(--gold); }
+.star:hover { transform:scale(1.15); }
+.star-label { font-size:12px; color:var(--ts); margin-top:6px; }
+
+/* NPS */
+.nps-row { display:flex; gap:4px; flex-wrap:wrap; }
+.nps-btn {
+  width:38px; height:38px; border:1.5px solid var(--border); border-radius:8px;
+  background:white; font-size:13px; font-weight:600; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--tm); transition:all 0.12s;
+}
+.nps-btn:hover { border-color:var(--ng); }
+.nps-btn.selected { background:var(--ng); color:white; border-color:var(--ng); }
+.nps-labels { display:flex; justify-content:space-between; font-size:10px; color:var(--ts); margin-top:4px; }
+
+/* DAYS GRID */
+.days-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:6px; }
+.day-tile {
+  border:1.5px solid var(--border); border-radius:8px; padding:8px 4px;
+  text-align:center; cursor:pointer; transition:all 0.12s;
+}
+.day-tile:hover { border-color:var(--ng); }
+.day-tile.selected { background:var(--ng); border-color:var(--ng); color:white; }
+.day-tile .dt-num { font-size:14px; font-weight:700; }
+.day-tile .dt-lbl { font-size:9px; color:var(--ts); line-height:1.3; margin-top:2px; }
+.day-tile.selected .dt-lbl { color:rgba(255,255,255,0.75); }
+
+/* SUBMIT */
+.submit-btn {
+  width:100%; padding:15px; border:none; border-radius:10px;
+  background:var(--ng); color:white; font-size:16px; font-weight:700;
+  cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;
+  transition:background 0.15s, transform 0.1s; font-family:inherit; margin-top:6px;
+}
+.submit-btn:hover { background:var(--ng-dark); }
+.submit-btn:active { transform:scale(0.99); }
+.submit-note { font-size:11px; color:var(--ts); text-align:center; margin-top:8px; }
+
+/* SUCCESS */
+.success {
+  display:none; text-align:center; padding:48px 24px;
+  background:white; border-radius:12px; border:1px solid var(--border);
+}
+.success-icon { font-size:56px; margin-bottom:16px; }
+.success h2 { font-size:22px; font-weight:700; color:var(--ng-dark); margin-bottom:8px; }
+.success p { font-size:14px; color:var(--ts); max-width:360px; margin:0 auto 24px; line-height:1.6; }
+.cert-box {
+  background:var(--gold-bg); border:1px solid #ffe082; border-radius:10px;
+  padding:16px 20px; max-width:360px; margin:0 auto 20px;
+}
+.cert-box .cert-title { font-size:12px; color:#b7791f; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px; }
+.cert-name { font-size:18px; font-weight:700; color:#744210; margin-bottom:4px; }
+.cert-sub { font-size:12px; color:#92400e; }
+
+/* STATS PREVIEW */
+.stats-bar {
+  background:var(--ng-pale); border:1px solid #b2dfdb; border-radius:10px;
+  padding:12px 16px; margin-bottom:14px; font-size:12px; color:var(--ng-dark);
+}
+.stats-bar strong { display:block; margin-bottom:2px; font-size:13px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="flag-row">
+    <span style="background:#008751;"></span>
+    <span style="background:#fff;"></span>
+    <span style="background:#008751;"></span>
+  </div>
+  <div class="header-badge">7-Day Completion Survey</div>
+  <h1>Make Nigeria <span>AI-Ready</span></h1>
+  <p>You made it! Take 3 minutes to complete this survey and receive your digital completion badge.</p>
+</div>
+
+<!-- PROGRESS -->
+<div class="prog-wrap">
+  <div class="prog-labels">
+    <span id="prog-label">0% complete</span>
+    <span id="prog-count">0 / 9 sections</span>
+  </div>
+  <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
+</div>
+
+<div class="wrap">
+
+  <div id="form-wrap">
+
+  <!-- SECTION 1: About You -->
+  <div class="section">
+    <div class="section-title">About You</div>
+
+    <div class="card">
+      <div class="field">
+        <label>Full name <span class="req">*</span></label>
+        <input type="text" id="f-name" placeholder="e.g. Chioma Okafor" oninput="updateProgress()">
+      </div>
+      <div class="field">
+        <label>WhatsApp number <span class="req">*</span></label>
+        <input type="tel" id="f-phone" placeholder="e.g. 08012345678" oninput="updateProgress()">
+      </div>
+      <div class="field">
+        <label>State <span class="req">*</span></label>
+        <select id="f-state" onchange="updateProgress()">
+          <option value="" disabled selected>Select your state</option>
+          <option>Abia</option><option>Adamawa</option><option>Akwa Ibom</option>
+          <option>Anambra</option><option>Bauchi</option><option>Bayelsa</option>
+          <option>Benue</option><option>Borno</option><option>Cross River</option>
+          <option>Delta</option><option>Ebonyi</option><option>Edo</option>
+          <option>Ekiti</option><option>Enugu</option><option>FCT — Abuja</option>
+          <option>Gombe</option><option>Imo</option><option>Jigawa</option>
+          <option>Kaduna</option><option>Kano</option><option>Katsina</option>
+          <option>Kebbi</option><option>Kogi</option><option>Kwara</option>
+          <option>Lagos</option><option>Nasarawa</option><option>Niger</option>
+          <option>Ogun</option><option>Ondo</option><option>Osun</option>
+          <option>Oyo</option><option>Plateau</option><option>Rivers</option>
+          <option>Sokoto</option><option>Taraba</option><option>Yobe</option>
+          <option>Zamfara</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>What best describes you? <span class="req">*</span></label>
+        <select id="f-sector" onchange="updateProgress()">
+          <option value="" disabled selected>Select your sector</option>
+          <option>Civil servant / government worker</option>
+          <option>Business owner / entrepreneur</option>
+          <option>Market trader / artisan</option>
+          <option>Teacher / educator</option>
+          <option>Health worker (nurse, CHEW, etc.)</option>
+          <option>Student / recent graduate</option>
+          <option>NYSC corps member</option>
+          <option>Unemployed / job seeker</option>
+          <option>Tech worker</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Language you used for the course</label>
+        <div class="options" id="lang-opts">
+          <label class="option" onclick="selectOption(this,'lang-opts','radio')">
+            <input type="radio" name="lang"> <span class="option-label">English</span>
+          </label>
+          <label class="option" onclick="selectOption(this,'lang-opts','radio')">
+            <input type="radio" name="lang"> <span class="option-label">Nigerian Pidgin</span>
+          </label>
+          <label class="option" onclick="selectOption(this,'lang-opts','radio')">
+            <input type="radio" name="lang"> <span class="option-label">I switched between both</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: Overall Experience -->
+  <div class="section">
+    <div class="section-title">Overall Experience</div>
+    <div class="card">
+      <div class="field">
+        <label>How would you rate the overall programme? <span class="req">*</span></label>
+        <div class="stars" id="star-overall">
+          <span class="star" onclick="rateStar('star-overall',1)">★</span>
+          <span class="star" onclick="rateStar('star-overall',2)">★</span>
+          <span class="star" onclick="rateStar('star-overall',3)">★</span>
+          <span class="star" onclick="rateStar('star-overall',4)">★</span>
+          <span class="star" onclick="rateStar('star-overall',5)">★</span>
+        </div>
+        <div class="star-label" id="star-overall-label">Tap to rate</div>
+      </div>
+
+      <div class="field">
+        <label>How likely are you to recommend this to a friend or colleague?</label>
+        <div class="nps-row" id="nps-row">
+          <button class="nps-btn" onclick="selectNPS(this,0)">0</button>
+          <button class="nps-btn" onclick="selectNPS(this,1)">1</button>
+          <button class="nps-btn" onclick="selectNPS(this,2)">2</button>
+          <button class="nps-btn" onclick="selectNPS(this,3)">3</button>
+          <button class="nps-btn" onclick="selectNPS(this,4)">4</button>
+          <button class="nps-btn" onclick="selectNPS(this,5)">5</button>
+          <button class="nps-btn" onclick="selectNPS(this,6)">6</button>
+          <button class="nps-btn" onclick="selectNPS(this,7)">7</button>
+          <button class="nps-btn" onclick="selectNPS(this,8)">8</button>
+          <button class="nps-btn" onclick="selectNPS(this,9)">9</button>
+          <button class="nps-btn" onclick="selectNPS(this,10)">10</button>
+        </div>
+        <div class="nps-labels"><span>0 = Not at all</span><span>10 = Definitely</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: Most Useful Day -->
+  <div class="section">
+    <div class="section-title">The Content</div>
+    <div class="card">
+      <div class="field">
+        <label>Which day was most useful to you? <span class="req">*</span></label>
+        <div class="days-grid" id="best-day">
+          <div class="day-tile" onclick="selectDay(this,'best-day')">
+            <div class="dt-num">1</div><div class="dt-lbl">What is AI?</div>
+          </div>
+          <div class="day-tile" onclick="selectDay(this,'best-day')">
+            <div class="dt-num">2</div><div class="dt-lbl">AI in Nigeria</div>
+          </div>
+          <div class="day-tile" onclick="selectDay(this,'best-day')">
+            <div class="dt-num">3</div><div class="dt-lbl">AI Tools</div>
+          </div>
+          <div class="day-tile" onclick="selectDay(this,'best-day')">
+            <div class="dt-num">4</div><div class="dt-lbl">Risks & Scams</div>
+          </div>
+          <div class="day-tile" onclick="selectDay(this,'best-day')">
+            <div class="dt-num">5</div><div class="dt-lbl">SMEs</div>
+          </div>
+          <div class="day-tile" onclick="selectDay(this,'best-day')">
+            <div class="dt-num">6</div><div class="dt-lbl">Future Jobs</div>
+          </div>
+          <div class="day-tile" onclick="selectDay(this,'best-day')">
+            <div class="dt-num">7</div><div class="dt-lbl">Next Steps</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Which day was least useful? <span class="hint">(optional)</span></label>
+        <div class="days-grid" id="worst-day">
+          <div class="day-tile" onclick="selectDay(this,'worst-day')">
+            <div class="dt-num">1</div><div class="dt-lbl">What is AI?</div>
+          </div>
+          <div class="day-tile" onclick="selectDay(this,'worst-day')">
+            <div class="dt-num">2</div><div class="dt-lbl">AI in Nigeria</div>
+          </div>
+          <div class="day-tile" onclick="selectDay(this,'worst-day')">
+            <div class="dt-num">3</div><div class="dt-lbl">AI Tools</div>
+          </div>
+          <div class="day-tile" onclick="selectDay(this,'worst-day')">
+            <div class="dt-num">4</div><div class="dt-lbl">Risks & Scams</div>
+          </div>
+          <div class="day-tile" onclick="selectDay(this,'worst-day')">
+            <div class="dt-num">5</div><div class="dt-lbl">SMEs</div>
+          </div>
+          <div class="day-tile" onclick="selectDay(this,'worst-day')">
+            <div class="dt-num">6</div><div class="dt-lbl">Future Jobs</div>
+          </div>
+          <div class="day-tile" onclick="selectDay(this,'worst-day')">
+            <div class="dt-num">7</div><div class="dt-lbl">Next Steps</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>How easy was the content to understand?</label>
+        <div class="options" id="difficulty-opts">
+          <label class="option" onclick="selectOption(this,'difficulty-opts','radio')">
+            <input type="radio" name="difficulty">
+            <span class="option-label">Very easy — I understood everything</span>
+          </label>
+          <label class="option" onclick="selectOption(this,'difficulty-opts','radio')">
+            <input type="radio" name="difficulty">
+            <span class="option-label">Mostly easy — a few things needed re-reading</span>
+          </label>
+          <label class="option" onclick="selectOption(this,'difficulty-opts','radio')">
+            <input type="radio" name="difficulty">
+            <span class="option-label">Sometimes difficult — I needed help</span>
+          </label>
+          <label class="option" onclick="selectOption(this,'difficulty-opts','radio')">
+            <input type="radio" name="difficulty">
+            <span class="option-label">Too difficult — needed simpler language</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: Tools & Actions -->
+  <div class="section">
+    <div class="section-title">Tools & Action</div>
+    <div class="card">
+      <div class="field">
+        <label>Did you try any of the AI tools during the 7 days?</label>
+        <div class="options" id="tried-opts">
+          <label class="option" onclick="selectOption(this,'tried-opts','radio')">
+            <input type="radio" name="tried">
+            <span class="option-label">Yes — I tried at least one tool</span>
+          </label>
+          <label class="option" onclick="selectOption(this,'tried-opts','radio')">
+            <input type="radio" name="tried">
+            <span class="option-label">Not yet — but I plan to this week</span>
+          </label>
+          <label class="option" onclick="selectOption(this,'tried-opts','radio')">
+            <input type="radio" name="tried">
+            <span class="option-label">No — I had trouble signing up or accessing them</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Which tool(s) did you find most useful? <span class="hint">(tick all that apply)</span></label>
+        <div class="options" id="tool-opts">
+          <label class="option" onclick="selectOption(this,'tool-opts','check')">
+            <input type="checkbox"> <span class="option-label">ChatGPT</span>
+          </label>
+          <label class="option" onclick="selectOption(this,'tool-opts','check')">
+            <input type="checkbox"> <span class="option-label">Google Lens</span>
+          </label>
+          <label class="option" onclick="selectOption(this,'tool-opts','check')">
+            <input type="checkbox"> <span class="option-label">Canva AI</span>
+          </label>
+          <label class="option" onclick="selectOption(this,'tool-opts','check')">
+            <input type="checkbox"> <span class="option-label">Otter.ai</span>
+          </label>
+          <label class="option" onclick="selectOption(this,'tool-opts','check')">
+            <input type="checkbox"> <span class="option-label">Microsoft Copilot</span>
+          </label>
+          <label class="option" onclick="selectOption(this,'tool-opts','check')">
+            <input type="checkbox"> <span class="option-label">I haven't tried any yet</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>What is ONE change you will make at work using AI? <span class="req">*</span></label>
+        <textarea id="f-change" placeholder="e.g. I will use ChatGPT to write my weekly reports instead of spending 2 hours on them..." oninput="updateProgress()"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: Delivery -->
+  <div class="section">
+    <div class="section-title">Delivery & Format</div>
+    <div class="card">
+      <div class="field">
+        <label>How did you receive the lessons?</label>
+        <div class="options" id="channel-opts">
+          <label class="option" onclick="selectOption(this,'channel-opts','radio')">
+            <input type="radio" name="channel"> <span class="option-label">WhatsApp group</span>
+          </label>
+          <label class="option" onclick="selectOption(this,'channel-opts','radio')">
+            <input type="radio" name="channel"> <span class="option-label">WhatsApp broadcast (private messages)</span>
+          </label>
+          <label class="option" onclick="selectOption(this,'channel-opts','radio')">
+            <input type="radio" name="channel"> <span class="option-label">USSD</span>
+          </label>
+          <label class="option" onclick="selectOption(this,'channel-opts','radio')">
+            <input type="radio" name="channel"> <span class="option-label">Telegram</span>
+          </label>
+          <label class="option" onclick="selectOption(this,'channel-opts','radio')">
+            <input type="radio" name="channel"> <span class="option-label">SMS</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Was the timing (8am, 10am, 12pm, 2pm, 4pm) convenient?</label>
+        <div class="options" id="timing-opts">
+          <label class="option" onclick="selectOption(this,'timing-opts','radio')">
+            <input type="radio" name="timing"> <span class="option-label">Yes — the timing worked well for me</span>
+          </label>
+          <label class="option" onclick="selectOption(this,'timing-opts','radio')">
+            <input type="radio" name="timing"> <span class="option-label">Mostly — I sometimes read them later</span>
+          </label>
+          <label class="option" onclick="selectOption(this,'timing-opts','radio')">
+            <input type="radio" name="timing"> <span class="option-label">No — the timing didn't suit my schedule</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Was 7 days the right length?</label>
+        <div class="options" id="length-opts">
+          <label class="option" onclick="selectOption(this,'length-opts','radio')">
+            <input type="radio" name="length"> <span class="option-label">Yes — 7 days is perfect</span>
+          </label>
+          <label class="option" onclick="selectOption(this,'length-opts','radio')">
+            <input type="radio" name="length"> <span class="option-label">Too short — I wanted more</span>
+          </label>
+          <label class="option" onclick="selectOption(this,'length-opts','radio')">
+            <input type="radio" name="length"> <span class="option-label">Too long — 5 days would be better</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: Impact -->
+  <div class="section">
+    <div class="section-title">Impact</div>
+    <div class="card">
+      <div class="field">
+        <label>Before this course, how would you describe your knowledge of AI?</label>
+        <div class="options" id="before-opts">
+          <label class="option" onclick="selectOption(this,'before-opts','radio')">
+            <input type="radio" name="before">
+            <span class="option-label">I knew nothing about AI</span>
+          </label>
+          <label class="option" onclick="selectOption(this,'before-opts','radio')">
+            <input type="radio" name="before">
+            <span class="option-label">I had heard about it but didn't really understand it</span>
+          </label>
+          <label class="option" onclick="selectOption(this,'before-opts','radio')">
+            <input type="radio" name="before">
+            <span class="option-label">I had some basic understanding</span>
+          </label>
+          <label class="option" onclick="selectOption(this,'before-opts','radio')">
+            <input type="radio" name="before">
+            <span class="option-label">I already knew quite a bit about AI</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>After this course, how would you describe your knowledge of AI?</label>
+        <div class="options" id="after-opts">
+          <label class="option" onclick="selectOption(this,'after-opts','radio')">
+            <input type="radio" name="after">
+            <span class="option-label">I now have a solid basic understanding</span>
+          </label>
+          <label class="option" onclick="selectOption(this,'after-opts','radio')">
+            <input type="radio" name="after">
+            <span class="option-label">I understand AI and can use some tools</span>
+          </label>
+          <label class="option" onclick="selectOption(this,'after-opts','radio')">
+            <input type="radio" name="after">
+            <span class="option-label">I understand AI but still need more practice</span>
+          </label>
+          <label class="option" onclick="selectOption(this,'after-opts','radio')">
+            <input type="radio" name="after">
+            <span class="option-label">I didn't learn much new — the content was too basic</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>How many people have you already shared what you learned with?</label>
+        <div class="options" id="share-opts">
+          <label class="option" onclick="selectOption(this,'share-opts','radio')">
+            <input type="radio" name="share"> <span class="option-label">Nobody yet</span>
+          </label>
+          <label class="option" onclick="selectOption(this,'share-opts','radio')">
+            <input type="radio" name="share"> <span class="option-label">1–3 people</span>
+          </label>
+          <label class="option" onclick="selectOption(this,'share-opts','radio')">
+            <input type="radio" name="share"> <span class="option-label">4–10 people</span>
+          </label>
+          <label class="option" onclick="selectOption(this,'share-opts','radio')">
+            <input type="radio" name="share"> <span class="option-label">More than 10 people</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 7: Next Steps -->
+  <div class="section">
+    <div class="section-title">Next Steps</div>
+    <div class="card">
+      <div class="field">
+        <label>Would you be interested in a more advanced follow-up programme?</label>
+        <div class="options" id="advanced-opts">
+          <label class="option" onclick="selectOption(this,'advanced-opts','radio')">
+            <input type="radio" name="advanced">
+            <span class="option-label">Yes — free follow-up content on WhatsApp
+              <span class="option-sub">Another 7-day course going deeper</span>
+            </span>
+          </label>
+          <label class="option" onclick="selectOption(this,'advanced-opts','radio')">
+            <input type="radio" name="advanced">
+            <span class="option-label">Yes — a paid certification programme
+              <span class="option-sub">Like the GLSSC Process Intelligence Academy (8 weeks, professional certificate)</span>
+            </span>
+          </label>
+          <label class="option" onclick="selectOption(this,'advanced-opts','radio')">
+            <input type="radio" name="advanced">
+            <span class="option-label">Maybe — tell me more when it's available</span>
+          </label>
+          <label class="option" onclick="selectOption(this,'advanced-opts','radio')">
+            <input type="radio" name="advanced">
+            <span class="option-label">No — 7 days is enough for now</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 8: Open Feedback -->
+  <div class="section">
+    <div class="section-title">Your Voice</div>
+    <div class="card">
+      <div class="field">
+        <label>What did you like most about this programme?</label>
+        <textarea id="f-liked" placeholder="What stood out? What was most valuable?"></textarea>
+      </div>
+      <div class="field">
+        <label>What should we improve for Cohort 2?</label>
+        <textarea id="f-improve" placeholder="Be honest — what didn't work? What was missing?"></textarea>
+      </div>
+      <div class="field">
+        <label>Any other comments or suggestions?</label>
+        <textarea id="f-other" placeholder="Anything else you'd like to share..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 9: Consent -->
+  <div class="section">
+    <div class="section-title">Consent & Submit</div>
+    <div class="card">
+      <div class="field">
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'consent-opts','check')" id="consent-opts">
+            <input type="checkbox" id="consent-cb">
+            <span class="option-label">I agree that my anonymous feedback can be used to improve this programme and in reports to programme partners.</span>
+          </label>
+        </div>
+      </div>
+      <div class="field">
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'quote-opts','check')" id="quote-opts">
+            <input type="checkbox" id="quote-cb">
+            <span class="option-label">I'm happy for a quote from my feedback to be shared publicly (without my phone number).</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-bar">
+      <strong>🏆 After submitting you will receive:</strong>
+      Your digital AI-Ready Nigeria completion badge — shareable on LinkedIn, WhatsApp, and Twitter.
+    </div>
+
+    <button class="submit-btn" onclick="submitForm()">
+      🎓 Submit & Get My Badge
+    </button>
+    <p class="submit-note">Your number is never shared. This takes less than 30 seconds to submit.</p>
+  </div>
+
+  </div><!-- end form-wrap -->
+
+  <!-- SUCCESS SCREEN -->
+  <div class="success" id="success-screen">
+    <div class="success-icon">🎓</div>
+    <h2>Congratulations!</h2>
+    <p>You have officially completed the Make Nigeria AI-Ready 7-Day Programme.<br>Your response has been recorded.</p>
+    <div class="cert-box">
+      <div class="cert-title">Certificate of Completion</div>
+      <div class="cert-name" id="cert-name">—</div>
+      <div class="cert-sub">Make Nigeria AI-Ready — Cohort 1 · 2025</div>
+      <div class="cert-sub" style="margin-top:4px;">Global Lean Six Sigma Consulting (GLSSC) · EMBB0008</div>
+    </div>
+    <p style="font-size:13px;">Screenshot this screen and share it on WhatsApp or LinkedIn with the hashtag <strong>#NaijaAIReady</strong></p>
+    <div style="margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+      <button onclick="shareWA()" style="padding:10px 20px;background:#25d366;color:white;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;">
+        📤 Share on WhatsApp
+      </button>
+      <button onclick="window.print()" style="padding:10px 20px;background:#f5f5f0;color:#444;border:1px solid #ddd;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;">
+        🖨 Print Certificate
+      </button>
+    </div>
+  </div>
+
+</div><!-- end wrap -->
+
+<script>
+let npsVal = null;
+let starVal = 0;
+
+function selectOption(el, groupId, type) {
+  if (type === 'radio') {
+    document.querySelectorAll('#' + groupId + ' .option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+  } else {
+    el.classList.toggle('selected');
+  }
+  updateProgress();
+}
+
+function selectDay(el, groupId) {
+  document.querySelectorAll('#' + groupId + ' .day-tile').forEach(t => t.classList.remove('selected'));
+  el.classList.add('selected');
+  updateProgress();
+}
+
+function rateStar(groupId, val) {
+  starVal = val;
+  const labels = ['', 'Poor', 'Fair', 'Good', 'Very good', 'Excellent'];
+  const stars = document.querySelectorAll('#' + groupId + ' .star');
+  stars.forEach((s, i) => s.classList.toggle('lit', i < val));
+  document.getElementById(groupId + '-label').textContent = labels[val];
+  updateProgress();
+}
+
+function selectNPS(btn, val) {
+  npsVal = val;
+  document.querySelectorAll('#nps-row .nps-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  updateProgress();
+}
+
+function updateProgress() {
+  const checks = [
+    !!document.getElementById('f-name').value.trim(),
+    !!document.getElementById('f-phone').value.trim(),
+    document.getElementById('f-state').value !== '',
+    document.getElementById('f-sector').value !== '',
+    starVal > 0,
+    !!document.querySelector('#best-day .selected'),
+    !!document.getElementById('f-change').value.trim(),
+    !!document.querySelector('#tried-opts .selected'),
+    !!document.querySelector('#advanced-opts .selected'),
+  ];
+  const done = checks.filter(Boolean).length;
+  const pct = Math.round(done / checks.length * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-label').textContent = pct + '% complete';
+  document.getElementById('prog-count').textContent = done + ' / ' + checks.length + ' sections';
+}
+
+async function submitForm() {
+  const name   = document.getElementById('f-name').value.trim();
+  const phone  = document.getElementById('f-phone').value.trim();
+  const state  = document.getElementById('f-state').value;
+  const sector = document.getElementById('f-sector').value;
+  const change = document.getElementById('f-change').value.trim();
+
+  // Validation
+  if (!name)   { alert('Please enter your full name.'); return; }
+  if (!phone)  { alert('Please enter your WhatsApp number.'); return; }
+  if (!state)  { alert('Please select your state.'); return; }
+  if (starVal === 0) { alert('Please rate the overall programme.'); return; }
+  if (!document.querySelector('#best-day .selected')) { alert('Please select the most useful day.'); return; }
+  if (!change) { alert('Please tell us one change you will make using AI.'); return; }
+
+  // Collect all fields
+  const getSelected = (id) => {
+    const el = document.querySelector('#' + id + ' .selected .option-label');
+    return el ? el.textContent.trim() : '';
+  };
+  const getChecked = (id) => {
+    return [...document.querySelectorAll('#' + id + ' .selected .option-label')]
+      .map(e => e.textContent.trim()).join(', ');
+  };
+  const getDaySelected = (id) => {
+    const el = document.querySelector('#' + id + ' .selected .dt-num');
+    return el ? 'Day ' + el.textContent.trim() : '';
+  };
+
+  const payload = {
+    '01_Name':           name,
+    '02_WhatsApp':       phone,
+    '03_State':          state,
+    '04_Sector':         sector,
+    '05_Language':       getSelected('lang-opts'),
+    '06_Overall_Rating': starVal + ' / 5 stars',
+    '07_NPS_Score':      npsVal !== null ? npsVal + ' / 10' : 'Not answered',
+    '08_Best_Day':       getDaySelected('best-day'),
+    '09_Least_Day':      getDaySelected('worst-day'),
+    '10_Difficulty':     getSelected('difficulty-opts'),
+    '11_Tried_Tools':    getSelected('tried-opts'),
+    '12_Tools_Used':     getChecked('tool-opts'),
+    '13_Change_I_Will_Make': change,
+    '14_Channel_Used':   getSelected('channel-opts'),
+    '15_Timing':         getSelected('timing-opts'),
+    '16_Course_Length':  getSelected('length-opts'),
+    '17_AI_Before':      getSelected('before-opts'),
+    '18_AI_After':       getSelected('after-opts'),
+    '19_People_Shared':  getSelected('share-opts'),
+    '20_Advanced_Interest': getSelected('advanced-opts'),
+    '21_Liked_Most':     document.getElementById('f-liked').value.trim(),
+    '22_Improve':        document.getElementById('f-improve').value.trim(),
+    '23_Other_Comments': document.getElementById('f-other').value.trim(),
+    '24_Consent':        document.getElementById('consent-cb').checked ? 'Yes' : 'No',
+    '25_Quote_OK':       document.getElementById('quote-cb').checked ? 'Yes' : 'No',
+  };
+
+  // Show loading state
+  const btn = document.querySelector('.submit-btn');
+  btn.textContent = 'Submitting...';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch('https://formspree.io/f/mjgpekoe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (res.ok) {
+      // Success — show certificate screen
+      document.getElementById('form-wrap').style.display = 'none';
+      document.getElementById('success-screen').style.display = 'block';
+      document.getElementById('cert-name').textContent = name;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      const data = await res.json();
+      btn.textContent = '🎓 Submit & Get My Badge';
+      btn.disabled = false;
+      alert('Submission failed: ' + (data.error || 'Please try again.'));
+    }
+  } catch (err) {
+    btn.textContent = '🎓 Submit & Get My Badge';
+    btn.disabled = false;
+    alert('Network error. Please check your connection and try again.');
+  }
+}
+
+function shareWA() {
+  const name = document.getElementById('cert-name').textContent;
+  const msg = `🎓 I just completed the Make Nigeria AI-Ready 7-Day AI course!\n\n✅ I now know what AI is and how it works in Nigeria\n✅ I tried 5 free AI tools\n✅ I have a plan to use AI in my work\n\nIt's completely free and takes 10 minutes a day.\n\nJoin Cohort 2 👇\n[YOUR LINK]\n\n#NaijaAIReady #MakeNigeriaAIReady 🇳🇬`;
+  const url = 'https://wa.me/?text=' + encodeURIComponent(msg);
+  window.open(url, '_blank');
+}
+
+updateProgress();
+</script>
+</body>
+</html>
